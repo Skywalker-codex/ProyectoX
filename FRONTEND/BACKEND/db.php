@@ -2,8 +2,8 @@
 
 $server = "127.0.0.1";
 $database = "Produccion";
-$username = "isaac.esteve";
-$password = "isaac.esteve";
+$username = "Isaac.esteve";
+$password = "Isaac.esteve";
 
 $dsn = "sqlsrv:Server=$server;Database=$database;Encrypt=yes;TrustServerCertificate=yes";
 
