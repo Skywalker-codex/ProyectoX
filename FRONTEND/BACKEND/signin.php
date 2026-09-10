@@ -1,3 +1,4 @@
+```php
 <?php
 
 require_once "conexion.php";
@@ -23,10 +24,7 @@ if (strlen($password) < 8) {
     die("La contraseña debe tener al menos 8 caracteres.");
 }
 
-$passwordHash = password_hash(
-    $password,
-    PASSWORD_DEFAULT
-);
+$passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
 try {
 
@@ -46,9 +44,16 @@ try {
 
 } catch (PDOException $e) {
 
-    if ($e->getCode() === "23000") {
-        die("Este correo electrónico ya está registrado.");
-    }
+    http_response_code(500);
 
-    die("No se pudo crear la cuenta.");
+    echo "<h2>Error al registrar usuario</h2>";
+    echo "<pre>";
+    echo "Código: " . $e->getCode() . "\n";
+    echo "Mensaje: " . $e->getMessage() . "\n";
+    echo "</pre>";
+
+    error_log("ERROR REGISTRO: " . $e->getMessage());
+
+    exit;
 }
+```
