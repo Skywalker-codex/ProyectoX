@@ -1,6 +1,6 @@
 <?php
 
-$server = "SERVIDOR_SQL";
+$server = "127.0.0.1";
 $database = "Produccion";
 $username = "isaac.esteve";
 $password = "isaac.esteve";
