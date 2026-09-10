@@ -38,7 +38,7 @@ try {
         ":password" => $passwordHash
     ]);
 
-    header("Location: login.html?registro=ok");
+    header("Location: ./login.html?registro=ok");
     exit;
 
 } catch (PDOException $e) {
