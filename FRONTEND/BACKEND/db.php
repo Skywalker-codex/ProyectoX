@@ -5,7 +5,7 @@ $database = "Produccion";
 $username = "isaac.esteve";
 $password = "isaac.esteve";
 
-$dsn = "sqlsrv:Server=$server;Database=$database;Encrypt=yes;TrustServerCertificate=no";
+$dsn = "sqlsrv:Server=$server;Database=$database;Encrypt=yes;TrustServerCertificate=yes";
 
 try {
 
@@ -24,3 +24,4 @@ try {
 
     exit("Error interno del servidor");
 }
+
