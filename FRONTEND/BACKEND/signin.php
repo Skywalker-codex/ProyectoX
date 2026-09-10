@@ -20,7 +20,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     die("El correo electrónico no es válido.");
 }
 
-if (strlen($password) < 8) {
+if (strlen($password) < 1) {
     die("La contraseña debe tener al menos 8 caracteres.");
 }
 
