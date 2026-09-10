@@ -3,7 +3,7 @@
 require_once "conexion.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: signin.html");
+    header("Location: FRONTEND/signin.html");
     exit;
 }
 
@@ -41,7 +41,7 @@ try {
         ":password" => $passwordHash
     ]);
 
-    header("Location: login.html?registro=ok");
+    header("Location: FRONTEND/login.html?registro=ok");
     exit;
 
 } catch (PDOException $e) {
