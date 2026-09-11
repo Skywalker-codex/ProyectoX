@@ -1,0 +1,55 @@
+RewriteEngine On
+
+# =====================================================
+# LOGIN
+# =====================================================
+
+# POST /login -> login.php
+RewriteCond %{REQUEST_METHOD} POST
+RewriteRule ^login/?$ login.php [END]
+
+# GET /login -> login.html
+RewriteRule ^login/?$ login.html [END]
+
+
+# =====================================================
+# REGISTRO
+# =====================================================
+
+# POST /signin -> signin.php
+RewriteCond %{REQUEST_METHOD} POST
+RewriteRule ^signin/?$ signin.php [END]
+
+# GET /signin -> signin.html
+RewriteRule ^signin/?$ signin.html [END]
+
+
+# =====================================================
+# PORTAL
+# =====================================================
+
+RewriteRule ^portal/?$ portal.php [END]
+
+
+# =====================================================
+# LOGOUT
+# =====================================================
+
+RewriteRule ^logout/?$ logout.php [END]
+
+
+# =====================================================
+# EVITAR ACCESO DIRECTO A ARCHIVOS
+# =====================================================
+
+RewriteCond %{THE_REQUEST} \s/+portal\.php[\s?] [NC]
+RewriteRule ^portal\.php$ /portal [R=301,END]
+
+RewriteCond %{THE_REQUEST} \s/+login\.php[\s?] [NC]
+RewriteRule ^login\.php$ /login [R=301,END]
+
+RewriteCond %{THE_REQUEST} \s/+signin\.php[\s?] [NC]
+RewriteRule ^signin\.php$ /signin [R=301,END]
+
+RewriteCond %{THE_REQUEST} \s/+logout\.php[\s?] [NC]
+RewriteRule ^logout\.php$ /logout [R=301,END]
