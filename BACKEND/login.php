@@ -8,7 +8,7 @@ $email = $_POST["email"] ?? "";
 $password = $_POST["password"] ?? "";
 
 $sql = "
-    SELECT Id, Email, PasswordHash
+    SELECT Id, Email, Password
     FROM usuarios
     WHERE Email = :email
       AND IsActive = 1
