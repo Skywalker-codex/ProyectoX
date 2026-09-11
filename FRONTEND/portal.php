@@ -12,7 +12,7 @@ require_once "/var/www/ProyectoX/BACKEND/db.php";
 $userId = $_SESSION["user_id"];
 
 $sql = "
-    SELECT TOP 1 Id, Email, Nombre, Usuario, IsActive
+    SELECT TOP 1 Id, Email, Nombre, IsActive
     FROM usuarios
     WHERE Id = :id
       AND IsActive = 1
