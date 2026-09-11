@@ -7,7 +7,7 @@ if (!isset($_SESSION["user_id"])) {
     exit;
 }
 
-require_once "../BACKEND/db.php";
+require_once "/var/www/ProyectoX/BACKEND/db.php";
 
 $userId = $_SESSION["user_id"];
 
@@ -28,6 +28,7 @@ $stmt->execute([
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$user) {
+
     session_unset();
     session_destroy();
 
@@ -35,131 +36,44 @@ if (!$user) {
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Mi perfil</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            margin: 0;
-        }
-
-        header {
-            background: #222;
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        .profile {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .profile h1 {
-            margin-top: 0;
-        }
-
-        .data {
-            margin-top: 20px;
-        }
-
-        .row {
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .label {
-            font-weight: bold;
-            display: block;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .logout {
-            color: white;
-            text-decoration: none;
-            background: #d9534f;
-            padding: 10px 15px;
-            border-radius: 6px;
-        }
-    </style>
 </head>
 
 <body>
 
-<header>
+    <h1>
+        Bienvenido, <?= htmlspecialchars($user["Nombre"]) ?>
+    </h1>
 
-    <div>
-        Mi Portal
-    </div>
+    <p>
+        Usuario:
+        <?= htmlspecialchars($user["Usuario"]) ?>
+    </p>
 
-    <a class="logout" href="/PORTAL/logout.php">
-        Cerrar sesión
-    </a>
+    <p>
+        Email:
+        <?= htmlspecialchars($user["Email"]) ?>
+    </p>
 
-</header>
+    <p>
+        ID:
+        <?= htmlspecialchars($user["Id"]) ?>
+    </p>
 
-<div class="container">
+    <p>
+        Estado: Activo
+    </p>
 
-    <div class="profile">
-
-        <h1>
-            Hola, <?= htmlspecialchars($user["Nombre"]) ?>
-        </h1>
-
-        <p>
-            Bienvenido a tu perfil.
-        </p>
-
-        <div class="data">
-
-            <div class="row">
-                <span class="label">Nombre</span>
-                <?= htmlspecialchars($user["Nombre"]) ?>
-            </div>
-
-            <div class="row">
-                <span class="label">Nombre de usuario</span>
-                <?= htmlspecialchars($user["Usuario"]) ?>
-            </div>
-
-            <div class="row">
-                <span class="label">Email</span>
-                <?= htmlspecialchars($user["Email"]) ?>
-            </div>
-
-            <div class="row">
-                <span class="label">ID de usuario</span>
-                <?= htmlspecialchars($user["Id"]) ?>
-            </div>
-
-            <div class="row">
-                <span class="label">Estado</span>
-                Activo
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
+    <a href="/logout">Cerrar sesión</a>
 
 </body>
+
 </html>
