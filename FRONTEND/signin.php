@@ -3,7 +3,7 @@
 require_once __DIR__ . "/db.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: FRONTEND/signin.html");
+    header("Location: /signin");
     exit;
 }
 
@@ -12,23 +12,27 @@ $email = trim($_POST["email"] ?? "");
 $password = $_POST["password"] ?? "";
 
 if ($nombre === "" || $email === "" || $password === "") {
-    die("Todos los campos son obligatorios.");
+    exit("Todos los campos son obligatorios.");
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    die("El correo electrónico no es válido.");
+    exit("El correo electrónico no es válido.");
 }
 
-if (strlen($password) < 1) {
-    die("La contraseña debe tener al menos 8 caracteres.");
+if (strlen($password) < 8) {
+    exit("La contraseña debe tener al menos 8 caracteres.");
 }
 
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
 try {
 
-    $sql = "INSERT INTO usuarios (nombre, email, password)
-            VALUES (:nombre, :email, :password)";
+    $sql = "
+        INSERT INTO usuarios
+            (Nombre, Email, Password, IsActive)
+        VALUES
+            (:nombre, :email, :password, 1)
+    ";
 
     $stmt = $pdo->prepare($sql);
 
@@ -38,21 +42,19 @@ try {
         ":password" => $passwordHash
     ]);
 
-    header("Location: /portal?registro=ok");
+    header("Location: /login?registro=ok");
     exit;
 
 } catch (PDOException $e) {
+
+    error_log("ERROR REGISTRO: " . $e->getMessage());
 
     http_response_code(500);
 
     echo "<h2>Error al registrar usuario</h2>";
     echo "<pre>";
-    echo "Código: " . $e->getCode() . "\n";
-    echo "Mensaje: " . $e->getMessage() . "\n";
+    echo htmlspecialchars($e->getMessage());
     echo "</pre>";
-
-    error_log("ERROR REGISTRO: " . $e->getMessage());
 
     exit;
 }
-
