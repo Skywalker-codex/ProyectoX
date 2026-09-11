@@ -4,15 +4,14 @@ session_start();
 
 require_once "/var/www/ProyectoX/BACKEND/db.php";
 
-$email = $_POST["email"] ?? "";
+$email = trim($_POST["email"] ?? "");
 $password = $_POST["password"] ?? "";
 
 $sql = "
-    SELECT Id, Email, Password
+    SELECT TOP 1 Id, Email, Password
     FROM usuarios
     WHERE Email = :email
       AND IsActive = 1
-    LIMIT 1
 ";
 
 $stmt = $pdo->prepare($sql);

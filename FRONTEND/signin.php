@@ -38,7 +38,7 @@ try {
         ":password" => $passwordHash
     ]);
 
-    header("Location: /portal.html?registro=ok");
+    header("Location: /portal?registro=ok");
     exit;
 
 } catch (PDOException $e) {
