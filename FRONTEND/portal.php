@@ -2,24 +2,17 @@
 
 session_start();
 
-require_once __DIR__ . "/../db.php";
-
-// Comprobar autenticación
 if (!isset($_SESSION["user_id"])) {
-    header("Location: /PORTAL/login.html");
+    header("Location: /login");
     exit;
 }
 
+require_once "../BACKEND/db.php";
+
 $userId = $_SESSION["user_id"];
 
-// Obtener los datos del usuario
 $sql = "
-    SELECT 
-        Id,
-        Email,
-        Nombre,
-        Usuario,
-        IsActive
+    SELECT Id, Email, Nombre, Usuario, IsActive
     FROM usuarios
     WHERE Id = :id
       AND IsActive = 1
@@ -27,23 +20,21 @@ $sql = "
 ";
 
 $stmt = $pdo->prepare($sql);
+
 $stmt->execute([
     ":id" => $userId
 ]);
 
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Si el usuario ya no existe o está desactivado
 if (!$user) {
     session_unset();
     session_destroy();
 
-    header("Location: /PORTAL/login.html");
+    header("Location: /login");
     exit;
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
