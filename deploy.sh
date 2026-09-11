@@ -1,14 +1,11 @@
 #!/bin/bash
 
-echo "===== $(date) ====="
+# Evitar ejecuciones simultáneas
+exec 9>/var/run/proyectox-deploy.lock
+flock -n 9 || exit 0
 
-cd /var/www/ProyectoX || {
-    echo "ERROR: no se puede entrar en /var/www/ProyectoX"
-    exit 1
-}
+# Directorio del proyecto
+cd /var/www/ProyectoX || exit 1
 
-echo "Directorio: $(pwd)"
-echo "Usuario: $(whoami)"
-echo "Git: $(/usr/bin/git --version)"
-
+# Actualizar desde GitHub
 /usr/bin/git pull origin main
