@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once __DIR__ . "/db.php";
+require_once __DIR__ . "../BACKEND/db.php";
 
 $email = $_POST["email"] ?? "";
 $password = $_POST["password"] ?? "";
