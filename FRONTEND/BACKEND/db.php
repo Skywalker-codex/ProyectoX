@@ -1,6 +1,7 @@
 <?php
 
-$server = "127.0.0.1";
+/*$server = "127.0.0.1";*/
+$server = "79.112.109.165";
 $database = "Produccion";
 $username = "Isaac.esteve";
 $password = "Isaac.esteve";
