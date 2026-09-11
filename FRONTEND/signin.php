@@ -19,8 +19,8 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit("El correo electrónico no es válido.");
 }
 
-if (strlen($password) < 8) {
-    exit("La contraseña debe tener al menos 8 caracteres.");
+if (strlen($password) < 1) {
+    exit("La contraseña debe tener al menos 1 caracteres.");
 }
 
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
