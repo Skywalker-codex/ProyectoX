@@ -22,7 +22,7 @@ $stmt->execute([
 
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$user || !password_verify($password, $user["PasswordHash"])) {
+if (!$user || !password_verify($password, $user["Password"])) {
 
     exit("Usuario o contraseña incorrectos");
 }
