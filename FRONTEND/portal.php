@@ -12,7 +12,7 @@ require_once "/var/www/ProyectoX/BACKEND/db.php";
 $userId = $_SESSION["user_id"];
 
 $sql = "
-    SELECT TOP 1 Id, Email, Nombre, IsActive
+    SELECT TOP 1 Id, Email, nombre, IsActive
     FROM usuarios
     WHERE Id = :id
       AND IsActive = 1
@@ -227,11 +227,11 @@ if (!$user) {
 <div class="container">
 
     <div class="avatar">
-        <?= htmlspecialchars(strtoupper(substr($user["Nombre"], 0, 1))) ?>
+        <?= htmlspecialchars(strtoupper(substr($user["nombre"], 0, 1))) ?>
     </div>
 
     <h1>
-        Bienvenido, <?= htmlspecialchars($user["Nombre"]) ?>
+        Bienvenido, <?= htmlspecialchars($user["nombre"]) ?>
     </h1>
 
     <p class="subtitle">
