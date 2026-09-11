@@ -243,7 +243,7 @@ if (!$user) {
         <div class="info-row">
             <span class="label">Usuario</span>
             <span class="value">
-                <?= htmlspecialchars($user["Usuario"]) ?>
+                <?= htmlspecialchars($user["nombre"]) ?>
             </span>
         </div>
 
