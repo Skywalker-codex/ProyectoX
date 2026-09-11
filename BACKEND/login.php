@@ -32,5 +32,5 @@ session_regenerate_id(true);
 $_SESSION["user_id"] = $user["Id"];
 $_SESSION["email"] = $user["Email"];
 
-header("Location: /FRONTEND/PORTAL/portal.html");
+header("Location: ../FRONTEND/PORTAL/portal.html");
 exit;

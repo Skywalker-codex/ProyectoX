@@ -38,7 +38,7 @@ try {
         ":password" => $passwordHash
     ]);
 
-    header("Location: /FRONTEND/PORTAL/portal.html?registro=ok");
+    header("Location: ../FRONTEND/PORTAL/portal.html?registro=ok");
     exit;
 
 } catch (PDOException $e) {
