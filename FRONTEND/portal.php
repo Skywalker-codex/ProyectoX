@@ -2,40 +2,15 @@
 
 session_start();
 
-if (!isset($_SESSION["user_id"])) {
-    header("Location: /login");
-    exit;
-}
+echo "<pre>";
+echo "SESSION ID: " . session_id() . PHP_EOL;
+echo "USER ID: ";
+var_dump($_SESSION["user_id"] ?? null);
+echo "EMAIL: ";
+var_dump($_SESSION["email"] ?? null);
+echo "</pre>";
 
-require_once "/var/www/ProyectoX/BACKEND/db.php";
-
-$userId = $_SESSION["user_id"];
-
-$sql = "
-    SELECT Id, Email, Nombre, Usuario, IsActive
-    FROM usuarios
-    WHERE Id = :id
-      AND IsActive = 1
-    LIMIT 1
-";
-
-$stmt = $pdo->prepare($sql);
-
-$stmt->execute([
-    ":id" => $userId
-]);
-
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$user) {
-
-    session_unset();
-    session_destroy();
-
-    header("Location: /login");
-    exit;
-}
-?>
+exit; ?>
 
 <!DOCTYPE html>
 <html lang="es">
