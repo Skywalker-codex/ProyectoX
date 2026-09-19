@@ -1,0 +1,30 @@
+@model ProyectoX.Models.Usuario;
+
+@{
+    ViewData["Title"] = "Registro";
+}
+
+<div>
+    <h2>Crear una cuenta</h2>
+
+    <form asp-controller="Auth" asp-action="Register" method="post">
+        <fieldset>
+            <legend>Crear cuenta</legend>
+            <div>
+                <label for="nombre">Nombre de usuario:</label>
+                <input type="text" name="nombre" value=""/>
+            </div>
+            <div>
+                <label for="Email">Correo electrónico</label>
+                <input type="email" name="email" value=""/>
+            </div>
+            <div>
+                <label for="Password">Contraseña</label>
+                <input type="password" name="password" value=""/>
+            </div>
+            <div>
+                <input type="submit" value="Submit" class="submit" />
+            </div>
+        </fieldset>
+    </form>
+</div>
