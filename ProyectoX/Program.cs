@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using ProyectoX.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using IGDB;
+using IGDB.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -12,8 +15,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
     });
 
+var igdb = IGDBClient.CreateWithDefaults(
+    builder.Configuration["Igdb:ClientId"], //ClientId
+    builder.Configuration["Igdb:ClientSecret"] //Client secret
+);
+builder.Services.AddSingleton(igdb);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddMemoryCache();
+//builder.Services.AddHttpClient<IgdbTokenService>();
+//builder.Services.AddHttpClient<IgdbClient>();
 
 var app = builder.Build();
 

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ProyectoNet\\ProyectoX\\ProyectoX.csproj": {}
+    "C:\\Users\\isaac\\Desktop\\ProyectoX\\ProyectoX\\ProyectoX\\ProyectoX.csproj": {}
   },
   "projects": {
-    "D:\\ProyectoNet\\ProyectoX\\ProyectoX.csproj": {
+    "C:\\Users\\isaac\\Desktop\\ProyectoX\\ProyectoX\\ProyectoX\\ProyectoX.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ProyectoNet\\ProyectoX\\ProyectoX.csproj",
+        "projectUniqueName": "C:\\Users\\isaac\\Desktop\\ProyectoX\\ProyectoX\\ProyectoX\\ProyectoX.csproj",
         "projectName": "ProyectoX",
-        "projectPath": "D:\\ProyectoNet\\ProyectoX\\ProyectoX.csproj",
-        "packagesPath": "C:\\Users\\Isaac\\.nuget\\packages\\",
-        "outputPath": "D:\\ProyectoNet\\ProyectoX\\obj\\",
+        "projectPath": "C:\\Users\\isaac\\Desktop\\ProyectoX\\ProyectoX\\ProyectoX\\ProyectoX.csproj",
+        "packagesPath": "C:\\Users\\isaac\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\isaac\\Desktop\\ProyectoX\\ProyectoX\\ProyectoX\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Isaac\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\isaac\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -39,13 +39,17 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
+            "IGDB": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -76,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

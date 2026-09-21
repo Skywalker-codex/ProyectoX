@@ -31,7 +31,7 @@
             </div>
             @if (User.Identity.IsAuthenticated)
             {
-                <p>¡Hola, @User.Identity.Name! Has iniciado sesión.</p>
+                <p> @User.Identity.Name</p>
                 <a asp-controller="Auth" asp-action="Logout">Cerrar sesión</a>
             }
             else
@@ -43,7 +43,6 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
-            <a asp-controller="Auth" asp-action="Register" class="btn btn-primary">Registrarse</a>
         </main>
     </div>
 

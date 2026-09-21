@@ -1,8 +1,31 @@
-﻿@{
+﻿@model IEnumerable<IGDB.Models.Game>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div>
+    <main role="main" class="pb-3">
+        @if(User.Identity.IsAuthenticated)
+        {
+            <p>Bienvenido, @User.Identity.Name</p>
+
+            <div>Lista de juegos: </div>
+            @foreach (var game in Model)
+            {
+                <p>Nombre: @game.Name</p>
+                <p>Nota en IGDB: @game.TotalRating</p>
+            }
+
+        }
+        else
+        {
+            <p>No tienes cuenta? </p> <a asp-controller="Auth" asp-action="Register" class="btn btn-primary">Regístrate</a>
+            <a asp-controller="Auth" asp-action="Login" class="btn btn-primary">Inicia sesión si ya estás registrado.</a>
+        }
+    </main>
 </div>
