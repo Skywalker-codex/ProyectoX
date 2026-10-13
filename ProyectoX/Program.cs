@@ -18,6 +18,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 var igdb = IGDBClient.CreateWithDefaults(
     builder.Configuration["Igdb:ClientId"], //ClientId
     builder.Configuration["Igdb:ClientSecret"] //Client secret
+
+    
 );
 builder.Services.AddSingleton(igdb);
 

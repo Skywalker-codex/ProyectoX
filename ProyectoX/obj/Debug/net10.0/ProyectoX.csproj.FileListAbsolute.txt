@@ -241,6 +241,7 @@ C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\ProyectoX
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Azure.Core.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Azure.Identity.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Humanizer.dll
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\IGDB.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.Build.Framework.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.CodeAnalysis.dll
@@ -256,6 +257,7 @@ C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.Extensions.Http.Polly.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.Identity.Client.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.Identity.Client.Broker.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.Identity.Client.Extensions.Msal.dll
@@ -270,6 +272,9 @@ C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.VisualStudio.SolutionPersistence.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Mono.TextTemplating.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Newtonsoft.Json.dll
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Polly.dll
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Polly.Extensions.Http.dll
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\RestEase.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\System.ClientModel.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\System.CodeDom.dll
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\System.Composition.AttributedModel.dll
@@ -461,8 +466,9 @@ C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\obj\Debug\net10.0\refint\Pr
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\obj\Debug\net10.0\ProyectoX.pdb
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\obj\Debug\net10.0\ProyectoX.genruntimeconfig.cache
 C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\obj\Debug\net10.0\ref\ProyectoX.dll
-C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\IGDB.dll
-C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Microsoft.Extensions.Http.Polly.dll
-C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Polly.dll
-C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\Polly.Extensions.Http.dll
-C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\RestEase.dll
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\publish\web.config
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\publish\appsettings.Development.json
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\publish\appsettings.json
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\publish\ProyectoX.deps.json
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\publish\ProyectoX.runtimeconfig.json
+C:\Users\isaac\Desktop\ProyectoX\ProyectoX\ProyectoX\bin\Debug\net10.0\publish\ProyectoX.staticwebassets.endpoints.json
