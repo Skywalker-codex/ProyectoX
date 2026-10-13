@@ -1,0 +1,57 @@
+@model IGDB.Models.Game
+@{
+    ViewData["Title"] = "Game Details";
+    var game = Model;
+    var coverUrl = game.Cover.Value.Url;
+}
+
+<div class="text-center">
+    <h1 class="display-4">@game.Name</h1>
+</div>
+
+<div>
+    <main role="main" class="pb-3">
+            <p>Nota: @(game.TotalRating?.ToString("F1") ?? "Sin nota")</p>
+
+            @{
+                coverUrl = game.Cover.Value.Url.Replace("t_thumb", "t_cover_big");
+            }
+            
+            <img src="https:@coverUrl" alt="@game.Name" />
+            <p>Fecha de lanzamiento: @game.FirstReleaseDate</p>
+            <p>Plataformas disponibles:</p>
+            <ul>
+                @foreach (var platform in game.Platforms.Values)
+                {
+                    <li>@platform.Name</li>
+                }
+            </ul>
+            <p>Descripción: @game.Summary</p>
+    </main>
+</div>
+
+<div>
+    <h2>Registrar juego</h2>
+    <form asp-controller="Games" asp-action="LogGame" method="post">
+        <fieldset>
+            <legend>Registrar juego</legend>
+            <input type="hidden" name="gameId" value="@Model.Id" />
+            <label for="gameState">Estado</label>
+            <select id="gameState" name="gameState" required>
+                <option value="">Seleccione un estado</option>
+                <option value="Jugado">Jugado</option>
+                <option value="En progreso">En progreso</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Abandonado">Abandonado</option>
+            </select>
+
+            <label for="review">Reseña</label>
+            <textarea id="review" name="review"></textarea>
+
+            <label for="rating">Puntuación</label>
+            <input type="number" id="rating" name="rating" min="1" max="10" />
+
+            <button type="submit">Registrar</button>
+        </fieldset>
+    </form>
+</div>

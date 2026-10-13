@@ -1,0 +1,51 @@
+@model IEnumerable<IGDB.Models.Game>
+@{
+    ViewData["Title"] = "Game List";
+
+    int pagina = (int)ViewBag.Pagina;
+    bool hayAnterior = (bool)ViewBag.HayPaginaAnterior;
+    bool haySiguiente = (bool)ViewBag.HayPaginaSiguiente;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Lista de juegos</h1>
+    <p>Lista paginada de juegos ordenados por popularidad</p>
+</div>
+
+<div>
+    <main role="main" class="pb-3">
+        @if(User.Identity.IsAuthenticated)
+        {
+            <div>Lista de juegos: </div>
+            @foreach (IGDB.Models.Game game in Model)
+            {
+                <p>Nombre: @game.Name</p>
+                <p>Nota en IGDB: @(game.Rating?.ToString("F1") ?? "Sin nota")</p>
+
+                var coverUrl = game.Cover.Value.Url.Replace("t_thumb", "t_cover_big");
+
+                <a asp-action="Details" asp-route-id="@game.Id">
+                    <img src="https:@coverUrl" alt="@game.Name" />
+                </a>
+                
+            }
+
+        //<nav class="d-flex justify-content-between mt-3">
+        @if (hayAnterior)
+        {
+            <a asp-action="Index" asp-route-pagina="@(pagina - 1)">Anterior</a>
+        }
+        @if (haySiguiente)
+        {
+            <a asp-action="Index" asp-route-pagina="@(pagina + 1)">Siguiente</a>
+        }
+    //</nav>
+
+        }
+        else
+        {
+            <p>No tienes cuenta? </p> <a asp-controller="Auth" asp-action="Register" class="btn btn-primary">Regístrate</a>
+            <a asp-controller="Auth" asp-action="Login" class="btn btn-primary">Inicia sesión si ya estás registrado.</a>
+        }
+    </main>
+</div>

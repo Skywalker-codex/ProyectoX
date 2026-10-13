@@ -1,0 +1,25 @@
+@model ProyectoX.Models.ProfileViewModel
+@{
+    ViewData["Title"] = "Perfil de usuario";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Perfil de usuario</h1>
+    <p>Información del usuario</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Datos personales</h3>
+        <p><strong>Nombre:</strong> @Model.Nombre</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Fecha de creación:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy")</p>
+
+        @if(User.Identity.IsAuthenticated)
+        {
+            <li>
+                <a class ="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index">Logs</a>
+            </li>
+        }
+    </div>
+</div>
