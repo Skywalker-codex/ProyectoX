@@ -1,4 +1,6 @@
-@model IEnumerable<ProyectoX.Models.Log>
+@using System.Diagnostics.Eventing.Reader
+@using System.Security.Claims;
+@model IEnumerable<ProyectoX.Models.LogConJuegoViewModel>
 @{
     ViewData["Title"] = "Logs";
 }
@@ -9,31 +11,49 @@
     <main role="main" class="pb-3">
         @if(User.Identity.IsAuthenticated)
         {
-            <div>Lista de juegos: </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Juego (ID)</th>
-                        <th>Estado</th>
-                        <th>Valoración</th>
-                        <th>Reseña</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var log in Model)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+            @if(Model == null || !Model.Any())
+            {
+                <p>Este usuario no ha registrado juegos</p>
+            }
+            else
+            {
+                <div>Lista de juegos: </div>
+                <div>
+                    @foreach(var log in Model)
                     {
-                        <tr>
-                            <td>@log.LogDate.ToString("dd/MM/yyyy")</td>
-                            <td>@log.GameId</td>
-                            <td>@log.GameState</td>
-                            <td>@log.Rating</td>
-                            <td>@log.Review</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                        <div>
+                            <a asp-controller="Games" asp-action="Details" asp-route-id="@log.Juego.Id">
+                                <img src="https:@log.Juego.Cover.Value.Url.Replace("t_thumb", "t_cover_big")" alt="@log.Juego.Name" />
+                            </a>
 
+                            @if((int.TryParse(userId, out var userIdInt)) && log.Log.UserId == userIdInt)
+                            {
+                                <h2>Editar log</h2>
+                                <form asp-controller="Logs" asp-action="Edit" method="post" asp-route-id="@log.Log.Id">
+                                    <input type="hidden" name="id" value="@log.Log.Id" />
+
+                                    <select id="gameState" name="gameState" required>
+                                        <option value="">Seleccione un estado</option>
+                                        <option value="Jugado">Jugado</option>
+                                        <option value="En progreso">En progreso</option>
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Abandonado">Abandonado</option>
+                                    </select>
+
+                                    <textarea name="review">@log.Log.Review</textarea>
+
+                                    <input type="number" name="rating" min="0" max="10" value="@log.Log.Rating" />
+
+                                    <button type="submit">Guardar cambios</button>
+                                </form>
+                            }
+                            
+                        </div>
+                    }
+                </div>
+            }
         }
         else
         {

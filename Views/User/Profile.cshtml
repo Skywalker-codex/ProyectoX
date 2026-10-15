@@ -1,6 +1,7 @@
 @model ProyectoX.Models.ProfileViewModel
 @{
     ViewData["Title"] = "Perfil de usuario";
+    int userId = ViewBag.userId;
 }
 
 <div class="text-center">
@@ -18,7 +19,7 @@
         @if(User.Identity.IsAuthenticated)
         {
             <li>
-                <a class ="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index">Logs</a>
+                <a class ="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index" asp-route-id="@userId">Logs</a>
             </li>
         }
     </div>

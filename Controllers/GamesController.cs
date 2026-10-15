@@ -64,7 +64,7 @@ public class GamesController : Controller
     }
 
 
-    [HttpPost]/*Aqui se creará el Log*/
+    [HttpPost]
     [Authorize]
     public async Task<IActionResult> LogGame(int gameId, string gameState, string review, int rating)
     {

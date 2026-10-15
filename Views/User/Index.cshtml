@@ -1,0 +1,24 @@
+@model IEnumerable<ProyectoX.Models.Usuario>
+@{
+    ViewData["Title"] = "Usuarios";
+
+}
+
+<h1>Usuarios:</h1>
+<div class="row">
+    <main>
+        @if(User.Identity.IsAuthenticated)
+        {
+            <div>Lista de usuarios: </div>
+            @foreach(var user in Model)
+            {
+                <p>
+                    Nombre: 
+                    <a asp-controller="User" asp-action="Profile" asp-route-id="@user.Id">
+                        @user.nombre
+                    </a>
+                </p>
+            }
+        }
+    </main>
+</div>
