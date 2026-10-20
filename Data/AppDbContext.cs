@@ -10,4 +10,5 @@ public class AppDbContext : DbContext
     public DbSet<GameCache> Videojuegos {get;set;}
     public DbSet<Empresa> Empresas {get;set;}
     public DbSet<Log> Registros {get;set;}
+    public DbSet<EstadoJuego> EstadosJuego{ get; set;}
 }

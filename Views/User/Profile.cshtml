@@ -2,11 +2,22 @@
 @{
     ViewData["Title"] = "Perfil de usuario";
     int userId = ViewBag.userId;
+    var states = ViewBag.states as List<ProyectoX.Models.EstadoJuego>;
 }
 
 <div class="text-center">
     <h1 class="display-4">Perfil de usuario</h1>
     <p>Información del usuario</p>
+</div>
+
+<div id="states-views-container">
+    @foreach(var state in states)
+    {
+        <div id="state-view-link-container">
+            <a asp-controller="Logs" asp-action="Index" asp-route-userId="@userId" asp-route-stateName="@state.Nombre">@state.Nombre</a>
+        </div>
+    }
+
 </div>
 
 <div class="row">

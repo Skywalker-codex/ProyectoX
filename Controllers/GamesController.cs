@@ -5,6 +5,7 @@ using ProyectoX.Data;
 using ProyectoX.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProyectoX.Controllers;
 
@@ -48,13 +49,16 @@ public class GamesController : Controller
 
         return View(juegosOrdenados);
     }
-
     public async Task<IActionResult>Details(int id)
     {
         var game = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games,
         query: $"fields id, name, summary, cover.url, first_release_date, genres.name, platforms.name, total_rating; where id = {id};");
 
         var detailedGame = game.FirstOrDefault(g => g.Id == id);
+
+        var states = await _context.EstadosJuego.ToListAsync();
+
+        ViewBag.Estados = states;
 
         if(detailedGame == null)
         {
@@ -66,7 +70,7 @@ public class GamesController : Controller
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> LogGame(int gameId, string gameState, string review, int rating)
+    public async Task<IActionResult> LogGame(int gameId, int stateId, string review, int rating)
     {
         var email = User.FindFirstValue(ClaimTypes.Email);
         var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email);
@@ -74,7 +78,7 @@ public class GamesController : Controller
 
         var newLog = new Log
         {
-            GameState = gameState,
+            StateId = stateId,
             Review = review,
             Rating = rating,
             UserId = usuario.Id,
@@ -85,6 +89,25 @@ public class GamesController : Controller
         _context.Registros.Add(newLog);
         await _context.SaveChangesAsync();
         return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Search(string? query)
+    {
+        var textoSeguro = query.Replace("\"", "");
+
+        var results = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games,
+            query: $"fields id, name, total_rating, cover.url; where name ~ *\"{textoSeguro}\"*; sort total_rating_count desc; limit 10;");
+
+            var datos = results.Select(g => new
+            {
+                id = g.Id,
+                name = g.Name,
+                totalRating = g.TotalRating,
+                cover = g.Cover?.Value?.Url ?? ""
+            }).ToList();
+
+        return Json(datos);
     }
 
 }

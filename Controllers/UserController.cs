@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace ProyectoX.Controllers;
@@ -36,7 +37,6 @@ public class UserController : Controller
             return RedirectToAction("Login", "Auth");
         }
 
-
         var usuario = new Usuario();
         if(id == null)
         {
@@ -55,7 +55,9 @@ public class UserController : Controller
             CreatedAt = usuario?.CreatedAt ?? DateTime.MinValue
         };
 
-        
+        var logStates = await _context.EstadosJuego.ToListAsync();
+
+        ViewBag.states = logStates;
         ViewBag.userId = usuario?.Id;
         return View(userModel);
     }

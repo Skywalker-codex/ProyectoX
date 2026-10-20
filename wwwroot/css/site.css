@@ -29,3 +29,13 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.buscador-container {
+  position: relative; /*Lo de dentro del container se modificará relativamente a el.*/
+}
+
+#lista-resultados {
+  position: absolute;
+  width: 100%;
+
+}

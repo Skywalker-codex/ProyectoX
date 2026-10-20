@@ -36,9 +36,13 @@
                             </li>
                             <li>
                                 <a class ="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Usuarios</a>
-                            </li>
+                            </li> 
                         }
                     </ul>
+                    <div class="buscador-container">
+                        <input type="text" id="buscador-global" placeholder="Buscar"/>
+                        <div id="lista-resultados"></div>
+                    </div>
                 </div>
             </div>
             @if (User.Identity.IsAuthenticated)
@@ -66,6 +70,39 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        const input = document.getElementById("buscador-global");
+        const lista = document.getElementById("lista-resultados");
+
+        input.addEventListener("input", async (event) =>{
+            const texto = input.value.trim();
+
+            if(texto.length >= 3)
+            {
+                try{
+                    const response = await fetch(`/Games/Search?query=${texto}`);
+
+                    if(!response.ok){
+                        throw new Error('Error HTTP: ' + response.status);
+                    }
+
+                    const data = await response.json();
+
+                    lista.innerHTML = data.map(juego => `
+                        <a href="/Games/Details/${juego.id}">
+                            <p>${juego.name}</p>
+                        </a>
+                    `).join('');
+                }catch(error){
+                    console.error(error);
+                }
+            } else if (texto.length < 3)
+            {
+                lista.innerHTML = "";
+            }
+        })
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -3,9 +3,11 @@
     ViewData["Title"] = "Game Details";
     var game = Model;
     var coverUrl = game.Cover.Value.Url;
+
+    var estados = ViewBag.Estados as List<ProyectoX.Models.EstadoJuego>;
 }
 
-<div class="text-center">
+<div class="text-center">var states = await _context.EstadosJuego.ToListAsync();
     <h1 class="display-4">@game.Name</h1>
 </div>
 
@@ -29,20 +31,31 @@
             <p>Descripción: @game.Summary</p>
     </main>
 </div>
+<div id="show-log-form-button-container">
+    <button id="show-log-form-button">
+        Formulario de registro.
+    </button>
+</div>
 
-<div>
+<div id="log-form-container" style="display: none;">
     <h2>Registrar juego</h2>
     <form asp-controller="Games" asp-action="LogGame" method="post">
         <fieldset>
             <legend>Registrar juego</legend>
             <input type="hidden" name="gameId" value="@Model.Id" />
             <label for="gameState">Estado</label>
-            <select id="gameState" name="gameState" required>
-                <option value="">Seleccione un estado</option>
+            <select id="gameState" name="stateId" required>
+                @foreach (var state in estados)
+                {
+                    <option value = "@state.Id">@state.Nombre </option>
+                }
+
+                <!-- <option value="">Seleccione un estado</option>
                 <option value="Jugado">Jugado</option>
                 <option value="En progreso">En progreso</option>
                 <option value="Pendiente">Pendiente</option>
-                <option value="Abandonado">Abandonado</option>
+                <option value="Abandonado">Abandonado</option> -->
+                
             </select>
 
             <label for="review">Reseña</label>
@@ -55,3 +68,16 @@
         </fieldset>
     </form>
 </div>
+
+@section Scripts {
+    <script>
+        const showLogButton = document.getElementById("show-log-form-button");
+        const logFormContainer = document.getElementById("log-form-container");
+
+
+        showLogButton.addEventListener("click", (event) => {
+            logFormContainer.style.display = 'block';
+        });
+    </script>
+
+}

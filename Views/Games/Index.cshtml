@@ -17,18 +17,18 @@
         @if(User.Identity.IsAuthenticated)
         {
             <div>Lista de juegos: </div>
-            @foreach (IGDB.Models.Game game in Model)
-            {
-                <p>Nombre: @game.Name</p>
-                <p>Nota en IGDB: @(game.Rating?.ToString("F1") ?? "Sin nota")</p>
-
-                var coverUrl = game.Cover.Value.Url.Replace("t_thumb", "t_cover_big");
-
-                <a asp-action="Details" asp-route-id="@game.Id">
-                    <img src="https:@coverUrl" alt="@game.Name" />
-                </a>
-                
-            }
+            <input type="text" id="buscador" placeholder="Buscar juegos..." />
+            <div id="contenedor-juegos">
+                @foreach (IGDB.Models.Game game in Model)
+                {
+                    <p>Nombre: @game.Name</p>
+                    <p>Nota en IGDB: @(game.Rating?.ToString("F1") ?? "Sin nota")</p>
+                    var coverUrl = game.Cover.Value.Url.Replace("t_thumb", "t_cover_big");
+                    <a asp-action="Details" asp-route-id="@game.Id">
+                        <img src="https:@coverUrl" alt="@game.Name" />
+                    </a>
+                }
+            </div>
 
         //<nav class="d-flex justify-content-between mt-3">
         @if (hayAnterior)
@@ -49,3 +49,53 @@
         }
     </main>
 </div>
+
+@section Scripts {
+    <script>
+
+        const buscador = document.getElementById("buscador");
+        const contenedor = document.getElementById("contenedor-juegos");
+
+        const contenedorBase = contenedor.innerHTML;
+        
+
+        buscador.addEventListener("input", async (event) => {
+            const texto = buscador.value.trim();
+            if(texto.length < 3) {
+                contenedor.innerHTML = contenedorBase;
+            }
+            else if(texto.length >= 3)
+            {
+                contenedor.innerHTML = "Buscando juegos...";
+
+                try{
+                    const response = await fetch(`/Games/Search?query=${texto}`);
+
+                    if(!response.ok){
+                        throw new Error('Error HTTP: ' + response.status);
+                    }
+
+                    const data = await response.json();
+
+                    if(data.length == 0) {
+                        contenedor.innerHTML = "No se han encontrado juegos";
+                    }
+                    else {
+                        contenedor.innerHTML = data.map(juego => `
+                            <p>Nombre:${juego.name} </p>
+                            <p>Nota en IGDB: ${juego.totalRating.toFixed(1)}</p>
+
+                            <a href="/Games/Details/${juego.id}">
+                                <img src="https:${juego.cover}" alt=${juego.name}/>
+                            </a>
+
+                        `).join('');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    contenedor.innerHTML = "<p>Hubo un error en la búsqueda.</p>";
+                }
+            }
+        })
+    </script>
+}

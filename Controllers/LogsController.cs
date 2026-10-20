@@ -6,6 +6,7 @@ using ProyectoX.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using RestEase;
 
 namespace ProyectoX.Controllers;
 
@@ -21,7 +22,7 @@ public class LogsController : Controller
         _igdb = igdb;
     }
 
-    [Authorize]
+    /*[Authorize]
     public async Task<IActionResult> Index(int? id, int pagina = 1)
     {
         if(id==null)
@@ -30,13 +31,15 @@ public class LogsController : Controller
             id = usuario.Id;
         }
 
+        var states = await _context.EstadosJuego.ToListAsync();
+
         var offset = (pagina - 1) * TamanoPagina;
 
         var logs = await _context.Registros
         .Where(log => log.UserId == id)
         .OrderByDescending(log => log.LogDate)
-        /*.Skip(offset)
-        .Take(TamanoPagina)*/
+        .Skip(offset)
+        .Take(TamanoPagina)
         .ToListAsync();
 
         if(logs.Count == 0)
@@ -59,13 +62,13 @@ public class LogsController : Controller
         }).ToList();
 
         ViewBag.PaginaActual = pagina;
-
-        
+        ViewBag.Estados = states;
 
         return View("~/Views/User/Logs.cshtml", logsConJuego);
-    }
+    }*/
 
-    public async Task<IActionResult> Edit(int id, string gameState, string review, int rating)
+    [Post]
+    public async Task<IActionResult> Edit(int id, int stateId, string review, int rating)
     {
         var logToEdit = _context.Registros.FirstOrDefault(l => l.Id == id);
 
@@ -73,7 +76,7 @@ public class LogsController : Controller
         {
             return NotFound();
         }
-        logToEdit.GameState = gameState;
+        logToEdit.StateId = stateId;
         logToEdit.Review = review;
         logToEdit.Rating = rating;
 
@@ -82,9 +85,51 @@ public class LogsController : Controller
         return RedirectToAction("Index", new { id = logToEdit.UserId });
     }
 
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> Index(int? userId, string stateName)
+    {
+        if(userId == null)
+        {
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == User.FindFirstValue(ClaimTypes.Email));
+            if(usuario == null) return Unauthorized();
+            userId = usuario.Id;
+        }
 
+        var states = await _context.EstadosJuego.ToListAsync();
 
+        var state = await _context.EstadosJuego.FirstOrDefaultAsync(s => s.Nombre == stateName);
+        if(state == null) return NotFound();
+        var stateId = state.Id;
 
+        var logs = await _context.Registros
+        .Where(log => log.UserId == userId && log.StateId == stateId)
+        .OrderByDescending(log => log.LogDate)
+        .ToListAsync();
+
+        if(logs.Count == 0)
+        {
+            return View("~/Views/User/Logs.cshtml", new List<LogConJuegoViewModel>());
+        }
+
+        var gameIds = logs.Select(log => log.GameId)
+        .Distinct()
+        .ToList();
+
+        var idsText = string.Join(",", gameIds);
+        var games = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, 
+            query: $"fields id, name, rating, cover.url; where id = ({idsText});");
+
+        var logsConJuego = logs.Select(log => new LogConJuegoViewModel
+        {
+            Log = log,
+            Juego = games.FirstOrDefault(j => j.Id == log.GameId)
+        }).ToList();
+
+        ViewBag.Estados = states;
+
+        return View("~/Views/User/Logs.cshtml", logsConJuego);
+    }
 }
 
 
