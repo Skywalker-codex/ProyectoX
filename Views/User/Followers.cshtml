@@ -1,0 +1,18 @@
+@using System.Diagnostics.Eventing.Reader
+@using System.Security.Claims;
+@model IEnumerable<ProyectoX.Models.Usuario>
+@{
+    ViewData["Title"] = "Logs";
+}
+
+<h1>Seguidores</h1>
+<div id="followers-list-container">
+    @foreach( var follower in Model)
+    {
+        <div id="follower-container">
+            <a asp-controller="User" asp-action="Profile" asp-route-id="@follower.Id">
+                @follower.nombre
+            </a>
+        </div>
+    }
+</div>

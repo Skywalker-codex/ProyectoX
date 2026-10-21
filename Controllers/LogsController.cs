@@ -67,7 +67,7 @@ public class LogsController : Controller
         return View("~/Views/User/Logs.cshtml", logsConJuego);
     }*/
 
-    [Post]
+    [HttpPost]
     public async Task<IActionResult> Edit(int id, int stateId, string review, int rating)
     {
         var logToEdit = _context.Registros.FirstOrDefault(l => l.Id == id);

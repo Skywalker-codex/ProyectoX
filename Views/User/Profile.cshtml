@@ -1,13 +1,23 @@
+@using System.Security.Claims;
 @model ProyectoX.Models.ProfileViewModel
 @{
     ViewData["Title"] = "Perfil de usuario";
     int userId = ViewBag.userId;
+    bool alreadyFollowed = ViewBag.AlreadyFollowed;
+    bool itsUser = ViewBag.ItsUser;
     var states = ViewBag.states as List<ProyectoX.Models.EstadoJuego>;
 }
 
 <div class="text-center">
     <h1 class="display-4">Perfil de usuario</h1>
     <p>Información del usuario</p>
+</div>
+
+<div id="followers-link-container">
+    <a asp-controller="Follows" asp-action="FollowersIndex" asp-route-userId="@userId">Seguidores</a>
+</div>
+<div id="followeds-link-container">
+    <a asp-controller="Follows" asp-action="FollowedIndex" asp-route-userId="@userId">Seguidos</a>
 </div>
 
 <div id="states-views-container">
@@ -17,10 +27,18 @@
             <a asp-controller="Logs" asp-action="Index" asp-route-userId="@userId" asp-route-stateName="@state.Nombre">@state.Nombre</a>
         </div>
     }
-
 </div>
 
 <div class="row">
+    @if (!itsUser)
+    {
+        <div id="follow-button-div">
+            <button id="follow-button" data-user-id="@userId">
+                @(alreadyFollowed ? "Dejar de seguir" : "Seguir")
+            </button>
+        </div>
+    }
+
     <div class="col-md-6">
         <h3>Datos personales</h3>
         <p><strong>Nombre:</strong> @Model.Nombre</p>
@@ -35,3 +53,32 @@
         }
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        const followButton = document.getElementById("follow-button");
+        const unfollowButton = document.getElementById("unfollow-button");
+
+
+        if(followButton)
+        {
+            followButton.addEventListener("click", async (event) => {
+                const userId = event.currentTarget.dataset.userId;
+                const response = await fetch(`/Follows/Follow?userId=${userId}` ,{method:"POST"});
+
+                if(response.ok) {
+                    const data = await response.json();
+
+                    if(data.following) {
+                        followButton.textContent = "Siguiendo"; //Revisar esto
+                    }
+                    else if(!data.following)
+                    {
+                        followButton.textContent = "Seguir";
+                    }
+                }
+            });
+        }
+        
+    </script>
+}

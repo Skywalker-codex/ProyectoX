@@ -11,4 +11,5 @@ public class AppDbContext : DbContext
     public DbSet<Empresa> Empresas {get;set;}
     public DbSet<Log> Registros {get;set;}
     public DbSet<EstadoJuego> EstadosJuego{ get; set;}
+    public DbSet<Follow> Follows{ get; set; }
 }

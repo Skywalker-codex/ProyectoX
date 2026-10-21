@@ -57,8 +57,27 @@ public class UserController : Controller
 
         var logStates = await _context.EstadosJuego.ToListAsync();
 
+        //Comprobar si ya sigue a este perfil
+        var currentUserIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!int.TryParse(currentUserIdValue, out var currentUserId))
+        {
+            return Unauthorized();
+        }
+        bool alreadyFollowed = await _context.Follows.AnyAsync(f => f.FollowerId == currentUserId && f.FollowedId == id);
+
+        //Comprobar si es el perfil del usuario autenticado
+        bool itsUser = await _context.Follows.AnyAsync(f => id == currentUserId);
+        if(id == null)
+        {
+            itsUser = true;
+        }
+
+
         ViewBag.states = logStates;
         ViewBag.userId = usuario?.Id;
+        ViewBag.AlreadyFollowed = alreadyFollowed;
+        ViewBag.ItsUser = itsUser;
+
         return View(userModel);
     }
 
@@ -68,7 +87,7 @@ public class UserController : Controller
 
         if(nameSearch != null)
         {
-            
+            //Falta comprobación
         }
         else
         {
