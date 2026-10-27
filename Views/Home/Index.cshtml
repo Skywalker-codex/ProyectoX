@@ -3,29 +3,36 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<head>
+    <link rel="stylesheet" href="~/css/homeIndex.css" asp-append-version="true"/>
+</head>
+
+<div id="inicio">
+
+    <div class="d-flex justify-content-center" id="contenedor-imagenes">
+        <div class="imagen-inclinada-container">
+            <img class="imagen-inclinada" src="~/images/Astro.jpg"/>
+        </div>
+        <div class="imagen-inclinada-container">
+            <img class="imagen-inclinada" src="~/images/GOT.jpg"/>
+        </div>
+        <div class="imagen-inclinada-container">
+            <img class="imagen-inclinada" src="~/images/Bananza.jpg"/>
+        </div>
+        <div class="imagen-inclinada-container">
+            <img class="imagen-inclinada" src="~/images/Cyberpunk.png"/>
+        </div>
+    </div>
+
+    
+
+    <div class="d-flex flex-column justify-content-center align-items-center text-center" id="title">
+        <h1 id="titulo" class="display-4">Proyecto X</h1>
+        <div class="d-grid gap-2 mx-auto col-6" id="auth-buttons">
+            <a asp-controller="Auth" asp-action="Login" class="btn btn-primary border border-light border-2" role="button">Iniciar sesión</a>
+            <a asp-controller="Auth" asp-action="Register" class="btn btn-primary border border-light border-2" role="button" >Registrarse</a>
+        </div>
+    </div>
+    
 </div>
 
-<div>
-    <main role="main" class="pb-3">
-        @if(User.Identity.IsAuthenticated)
-        {
-            <p>Bienvenido, @User.Identity.Name</p>
-
-            <div>Lista de juegos: </div>
-            @foreach (var game in Model)
-            {
-                <p>Nombre: @game.Name</p>
-                <p>Nota en IGDB: @game.TotalRating</p>
-            }
-
-        }
-        else
-        {
-            <p>No tienes cuenta? </p> <a asp-controller="Auth" asp-action="Register" class="btn btn-primary">Regístrate</a>
-            <a asp-controller="Auth" asp-action="Login" class="btn btn-primary">Inicia sesión si ya estás registrado.</a>
-        }
-    </main>
-</div>
