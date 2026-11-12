@@ -12,7 +12,7 @@ namespace ProyectoX.Controllers;
 public class GamesController : Controller
 {
     private readonly IGDBClient _igdb;
-    private const int TamanoPagina = 10;
+    private const int TamanoPagina = 60;
     private readonly AppDbContext _context;
 
     public GamesController(IGDBClient igdb, AppDbContext context)
@@ -25,7 +25,7 @@ public class GamesController : Controller
     {
         var offset = (pagina - 1) * TamanoPagina;
         var popIds = await _igdb.QueryAsync<PopularityPrimitive>(IGDBClient.Endpoints.PopularityPrimitives, 
-            query: "fields game_id, value; where popularity_type=1; sort value desc; limit " + (TamanoPagina + 1) + "; offset " +  offset + ";");
+            query: "fields game_id, value; where popularity_type=4; sort value desc; limit " + (TamanoPagina + 1) + "; offset " +  offset + ";");
 
         var ids = popIds
         .Take(TamanoPagina)
@@ -36,7 +36,7 @@ public class GamesController : Controller
         var idsString = string.Join(",", ids);
 
         var games = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games, 
-            query: $"fields id, name, rating, cover.url; where id = ({idsString});");
+            query: $"fields id, name, rating, cover.url; where id = ({idsString}); limit {ids.Count};");
 
         var juegosOrdenados = ids
             .Select(id => games.FirstOrDefault(g => g.Id == id))
@@ -52,13 +52,39 @@ public class GamesController : Controller
     public async Task<IActionResult>Details(int id)
     {
         var game = await _igdb.QueryAsync<Game>(IGDBClient.Endpoints.Games,
-        query: $"fields id, name, summary, cover.url, first_release_date, genres.name, platforms.name, total_rating; where id = {id};");
+        query: $"fields id, name, summary, cover.url, first_release_date, genres.name, platforms.name, total_rating, involved_companies.company.name, involved_companies.developer, involved_companies.publisher; where id = {id};");
 
         var detailedGame = game.FirstOrDefault(g => g.Id == id);
 
+        //Estados disponibles para logs
         var states = await _context.EstadosJuego.ToListAsync();
 
+        //Datos del juego de la base de datos
+        var cantidadDeRatings = await _context.Registros.CountAsync(r => r.GameId == id);
+        var ratingPromedio = await _context.Registros.Where(r => r.GameId == id).AverageAsync(r => (double?)r.Rating) ?? 0;
+        var numeroDeReviews = await _context.Registros.CountAsync(r => r.GameId == id && !string.IsNullOrEmpty(r.Review));
+        var cantidadDeJugadosTotal = await _context.Registros.CountAsync(r => r.GameId == id && r.StateId > 0);
+
+        //Datos de jugados específicos
+        var cantidadDeAbandonados = await _context.Registros.CountAsync(r => r.GameId == id && r.StateId == 4);
+        var cantidadDeCompletado = await _context.Registros.CountAsync(r => r.GameId == id && r.StateId == 2);
+        var cantidadDeJugando = await _context.Registros.CountAsync(r => r.GameId == id && r.StateId == 5);
+        var cantidadDePausados = await _context.Registros.CountAsync(r => r.GameId == id && r.StateId == 3);
+
+
         ViewBag.Estados = states;
+        
+        //Viewbags de datos
+        ViewBag.CantidadDeRatings = cantidadDeRatings;
+        ViewBag.RatingPromedio = ratingPromedio;
+        ViewBag.NumeroDeReviews = numeroDeReviews;
+
+        //Viewbags de datos de jugados
+        ViewBag.CantidadDeJugadosTotal = cantidadDeJugadosTotal;
+        ViewBag.CantidadDeAbandonados = cantidadDeAbandonados;
+        ViewBag.CantidadDeCompletado = cantidadDeCompletado;
+        ViewBag.CantidadDeJugando = cantidadDeJugando;
+        ViewBag.CantidadDePausados = cantidadDePausados;
 
         if(detailedGame == null)
         {

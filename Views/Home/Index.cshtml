@@ -7,32 +7,106 @@
     <link rel="stylesheet" href="~/css/homeIndex.css" asp-append-version="true"/>
 </head>
 
-<div id="inicio">
+@if(!User.Identity.IsAuthenticated)
+{
+    <div id="inicio">
+        <div class="d-flex justify-content-center" id="contenedor-imagenes">
+            <div id="multiImageCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-pause="false" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="d-flex justify-content-center" id="contenedor-imagenes">
+                            <div class="imagen-inclinada-container">
+                                <img class="imagen-inclinada" src="~/images/Astro.jpg"/>
+                            </div>
+                            <div class="imagen-inclinada-container">
+                                <img class="imagen-inclinada" src="~/images/GOT.jpg"/>
+                            </div>
+                            <div class="imagen-inclinada-container">
+                                <img class="imagen-inclinada" src="~/images/Bananza.jpg"/>
+                            </div>
+                            <div class="imagen-inclinada-container">
+                                <img class="imagen-inclinada" src="~/images/Cyberpunk.png"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center" id="contenedor-imagenes">
+                            <div class="imagen-inclinada-container">
+                                <img class="imagen-inclinada" src="~/images/Astro.jpg"/>
+                            </div>
+                            <div class="imagen-inclinada-container">
+                                <img class="imagen-inclinada" src="~/images/GOT.jpg"/>
+                            </div>
+                            <div class="imagen-inclinada-container">
+                                <img class="imagen-inclinada" src="~/images/Bananza.jpg"/>
+                            </div>
+                            <div class="imagen-inclinada-container">
+                                <img class="imagen-inclinada" src="~/images/Cyberpunk.png"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="d-flex justify-content-center" id="contenedor-imagenes">
-        <div class="imagen-inclinada-container">
-            <img class="imagen-inclinada" src="~/images/Astro.jpg"/>
-        </div>
-        <div class="imagen-inclinada-container">
-            <img class="imagen-inclinada" src="~/images/GOT.jpg"/>
-        </div>
-        <div class="imagen-inclinada-container">
-            <img class="imagen-inclinada" src="~/images/Bananza.jpg"/>
-        </div>
-        <div class="imagen-inclinada-container">
-            <img class="imagen-inclinada" src="~/images/Cyberpunk.png"/>
+        <div class="d-flex flex-column justify-content-center align-items-center text-center" id="title">
+            <h1 id="titulo" class="display-4">Proyecto X</h1>
+            <div class="d-grid gap-2 mx-auto col-2" id="auth-buttons">
+                <div class="dropdown btn-group mb-1">
+                    <button style="font-family: gilroy;" class="btn btn-primary border border-light border-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Iniciar sesión
+                    </button>
+
+                    <form class="dropdown-menu p-4" asp-controller="Auth" asp-action="Login">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="dropdownCheck2">
+                                <label class="form-check-label" for="dropdownCheck2">
+                                    Remember me
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sign in</button>
+                    </form>
+
+                </div>
+                <p class="text-light mb-0" style="font-family: gilroy; text-shadow: 2px 2px 5px #0a0a0a;" >¿No tienes cuenta?</p>
+                <div class="dropdown">
+                    <button style="font-family: gilroy;" class="btn btn-light border border-primary border-2 text-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        ¡Regístrate!
+                    </button>
+
+                    <form asp-controller="Auth" asp-action="Register" method="post" class="dropdown-menu p-4">
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Email address</label>
+                            <input type="email" name="email" class="form-control" placeholder="email@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre de usuario</label>
+                            <input type="text" class="form-control" name="nombre"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sign in</button>
+                    </form>
+
+                </div>
+            </div>
         </div>
     </div>
-
+}
+else
+{
     
-
-    <div class="d-flex flex-column justify-content-center align-items-center text-center" id="title">
-        <h1 id="titulo" class="display-4">Proyecto X</h1>
-        <div class="d-grid gap-2 mx-auto col-6" id="auth-buttons">
-            <a asp-controller="Auth" asp-action="Login" class="btn btn-primary border border-light border-2" role="button">Iniciar sesión</a>
-            <a asp-controller="Auth" asp-action="Register" class="btn btn-primary border border-light border-2" role="button" >Registrarse</a>
-        </div>
-    </div>
-    
-</div>
+}
 

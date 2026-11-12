@@ -1,3 +1,4 @@
+
 @model IGDB.Models.Game
 @{
     ViewData["Title"] = "Game Details";
@@ -5,9 +6,104 @@
     var coverUrl = game.Cover.Value.Url;
 
     var estados = ViewBag.Estados as List<ProyectoX.Models.EstadoJuego>;
+
+    //Datos
+    var cantidadDeRatings = (int)ViewBag.CantidadDeRatings;
+    var ratingPromedio = (double)ViewBag.RatingPromedio;
+    var numeroDeReviews = (int)ViewBag.NumeroDeReviews;
+
+    //Jugados
+    var cantidadDeJugadosTotal = (int)ViewBag.CantidadDeJugadosTotal;
+    var cantidadDeAbandonados = (int)ViewBag.CantidadDeAbandonados;
+    var cantidadDeCompletado = (int)ViewBag.CantidadDeCompletado;
+    var cantidadDeJugando = (int)ViewBag.CantidadDeJugando;
+    var cantidadDePausados = (int)ViewBag.CantidadDePausados;
+
+    var companies = game.InvolvedCompanies?.Values;
+    var developer = companies?.FirstOrDefault(c => c.Developer == true)?.Company?.Value?.Name;
+    var publisher = companies?.FirstOrDefault(c => c.Publisher == true)?.Company?.Value?.Name;
 }
 
-<div class="text-center">var states = await _context.EstadosJuego.ToListAsync();
+<div id="game-body" class="row g-3 align-items-start">
+    <div id="game-cover-and-logging" class="col-12 col-md-auto">
+        <div id="game-cover">
+            @{
+                coverUrl = game.Cover.Value.Url.Replace("t_thumb", "t_cover_big");
+            }
+            <img class="rounded-2 border border-1 border-light-subtle" src="https:@coverUrl" alt="@game.Name" />
+        </div>
+
+        <div id="game-logging" class="rounded-2 bg-primary bg-gradient d-flex flex-column align-items-center gap-2">
+            <div id="rating"></div>
+
+            <div id="game-state">
+                <select id="gameState" name="stateId" required>
+                    @foreach (var state in estados)
+                    {
+                        <option value = "@state.Id">@state.Nombre </option>
+                    }
+                </select>
+            </div>
+
+            <div id="game-review">
+                <textarea id="review" name="review" placeholder="Escribe tu reseña aquí..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-details" class="col-12 col-md">
+        <div id="game-name">
+            <h1>@game.Name</h1>
+        </div>
+
+        <div id="game-companies">
+            <p>Por: @developer, @publisher</p>
+        </div>
+
+        <div id="game-release-date-and-genres">
+            <p>
+                @(game.FirstReleaseDate?.ToString("dd/MM/yyyy") ?? "Sin fecha") |
+                @foreach (var genre in game.Genres.Values)
+                {
+                    <span>@genre.Name |</span>
+                }
+            </p>
+        </div>
+
+        <div id="game-summary">
+            <p>@(game.Summary ?? "Sin descripción")</p>
+        </div>
+
+        <div id="game-sections">
+            Aqui irán los menus
+        </div>
+    </div>
+
+    
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+    const rating = new Rating('#rating', {
+        value: 0,
+        max: 5,
+        half: true,
+        size: 28,
+        onChange: (value) => {
+            console.log("Puntuación:", value);
+        }
+    });
+</script>
+}
+
+
+
+
+@*
+<div class="text-center">
     <h1 class="display-4">@game.Name</h1>
 </div>
 
@@ -19,7 +115,7 @@
                 coverUrl = game.Cover.Value.Url.Replace("t_thumb", "t_cover_big");
             }
             
-            <img src="https:@coverUrl" alt="@game.Name" />
+            <img class="rounded-2 border border-1 border-light-subtle" src="https:@coverUrl" alt="@game.Name" />
             <p>Fecha de lanzamiento: @game.FirstReleaseDate</p>
             <p>Plataformas disponibles:</p>
             <ul>
@@ -81,3 +177,4 @@
     </script>
 
 }
+*@

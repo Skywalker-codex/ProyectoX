@@ -18,12 +18,13 @@ public class AuthController : Controller
     {
         _context = context;
     }
-
+    
+    /*
     [HttpGet]
     public IActionResult Login()
     {
         return View();
-    }
+    }*/
 
     [HttpPost]
     public async Task<IActionResult> Login(string email, string password)
@@ -94,7 +95,7 @@ public class AuthController : Controller
         nuevoUsuario.Password = passwordHasher.HashPassword(nuevoUsuario, password);
         _context.Usuarios.Add(nuevoUsuario);
         await _context.SaveChangesAsync();
-        return RedirectToAction("Login");
+        return RedirectToAction("Index", "Home");
     }
 
 

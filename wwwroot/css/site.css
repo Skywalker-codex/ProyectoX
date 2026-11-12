@@ -17,8 +17,24 @@ html {
  min-height: 100%;
 }
 
-body {
+@font-face {
+  font-family: gilroy;
+  src: url(../fonts/Gilroy_ExtraBold.ttf);
+}
 
+p, a, h1, h2{
+  font-family: gilroy;
+}
+
+body {
+  background-color: rgba(0, 89, 255, 0.6);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body > .container {
+  flex: 1 0 auto;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -71,3 +87,6 @@ header::after{
 
   background-image: linear-gradient(to bottom, rgb(255, 255, 255), rgba(255, 255, 255, 0));
 }
+
+
+
